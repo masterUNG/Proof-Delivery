@@ -1,10 +1,12 @@
 package com.hitachi_tstv.yodpanom.yaowaluk.proofdelivery;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,7 +21,7 @@ import com.squareup.okhttp.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class DetailJob extends AppCompatActivity {
+public class DetailJob extends AppCompatActivity implements View.OnClickListener {
 
     //Explicit
     private TextView jobNoTextView, storeCodeTextView,
@@ -47,7 +49,50 @@ public class DetailJob extends AppCompatActivity {
         synData.execute(myConstant.getUrlDetailWherePlanId(),
                 planDtl2_idString);
 
+        //Get Event from Click Button or Image
+        firstImageView.setOnClickListener(DetailJob.this);
+        secondImageView.setOnClickListener(DetailJob.this);
+        thirdImageView.setOnClickListener(DetailJob.this);
+        arrivalButton.setOnClickListener(DetailJob.this);
+        takeImageButton.setOnClickListener(DetailJob.this);
+        confirmButton.setOnClickListener(DetailJob.this);
+        signatureButton.setOnClickListener(DetailJob.this);
+
+
     }   // Main Method
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+
+            case R.id.imageView3:
+                break;
+            case R.id.imageView4:
+                break;
+            case R.id.imageView5:
+                break;
+            case R.id.button4:
+                break;
+            case R.id.button5:  // Take Photo
+
+                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                startActivityForResult(intent, 0);
+
+                break;
+            case R.id.button6:
+                break;
+            case R.id.button7:
+                break;
+
+        }   // switch
+
+    }   // onClick
 
     private class SynData extends AsyncTask<String, Void, String> {
 
