@@ -1,10 +1,12 @@
 package com.hitachi_tstv.yodpanom.yaowaluk.proofdelivery;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -110,6 +112,20 @@ public class ServiceActivity extends AppCompatActivity {
                     //True Not Click on Button
                     jobListButton.setText("Job List = " + planDateStrings[0]);
                 }
+
+
+                // Get Event From Click
+                jobListButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent = new Intent(ServiceActivity.this, JobListView.class);
+                        intent.putExtra("Date", planDateStrings);
+                        intent.putExtra("Store", cnt_storeStrings);
+                        startActivity(intent);
+
+                    }   // onClick
+                });
 
 
 
