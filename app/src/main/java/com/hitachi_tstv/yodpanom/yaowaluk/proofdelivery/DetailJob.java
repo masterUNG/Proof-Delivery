@@ -64,7 +64,24 @@ public class DetailJob extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    }
+
+        switch (requestCode) {
+
+            case 0:
+                if (resultCode == RESULT_OK) {
+                    Log.d("12octV6", "Take Photo and Save Success");
+                }
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+
+        }   // switch
+
+    }   // onActivityResult
 
     @Override
     public void onClick(View view) {
