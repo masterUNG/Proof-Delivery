@@ -2,8 +2,11 @@ package com.hitachi_tstv.yodpanom.yaowaluk.proofdelivery;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +34,7 @@ public class DetailJob extends AppCompatActivity implements View.OnClickListener
     private Button arrivalButton, takeImageButton,
             confirmButton, signatureButton;
     private MyConstant myConstant = new MyConstant();
-    private String planDtl2_idString;
+    private String planDtl2_idString, pathFirstImageString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +70,21 @@ public class DetailJob extends AppCompatActivity implements View.OnClickListener
 
         switch (requestCode) {
 
-            case 0:
+            case 0: // From Take Photo
                 if (resultCode == RESULT_OK) {
                     Log.d("12octV6", "Take Photo and Save Success");
                 }
                 break;
-            case 1:
+            case 1: // From Click First Image
+
+                if (resultCode == RESULT_OK) {
+
+                    Uri uri = data.getData();
+                    pathFirstImageString = myFindPathImage(uri);
+                    Log.d("12octV5", "Path1 ==> " + pathFirstImageString);
+
+                }
+
                 break;
             case 2:
                 break;
@@ -83,12 +95,37 @@ public class DetailJob extends AppCompatActivity implements View.OnClickListener
 
     }   // onActivityResult
 
+    private String myFindPathImage(Uri uri) {
+
+        String result = null;
+        String[] strings = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, strings, null, null, null);
+
+        if (cursor != null) {
+
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            result = cursor.getString(index);
+
+        } else {
+            result = uri.getPath();
+        }
+
+        return result;
+    }
+
     @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
 
             case R.id.imageView3:
+
+                Intent intent1 = new Intent(Intent.ACTION_GET_CONTENT);
+                intent1.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent1,
+                        "Please Choose Photo"), 1);
+
                 break;
             case R.id.imageView4:
                 break;
