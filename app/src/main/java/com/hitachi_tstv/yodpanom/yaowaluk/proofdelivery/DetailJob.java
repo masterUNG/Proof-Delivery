@@ -16,6 +16,9 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class DetailJob extends AppCompatActivity {
 
     //Explicit
@@ -83,6 +86,22 @@ public class DetailJob extends AppCompatActivity {
             super.onPostExecute(s);
 
             Log.d("12octV5", "JSON ==> " + s);
+
+            try {
+
+                JSONArray jsonArray = new JSONArray(s);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                //Show Text
+                jobNoTextView.setText("Job No: " + jsonObject.getString("work_sheet_no"));
+                storeCodeTextView.setText("Store Code: " + jsonObject.getString("store_code"));
+                storeNameTextView.setText("Store Name: " + jsonObject.getString("store_nameEng"));
+                arrivalTextView.setText("Arrival: " + jsonObject.getString("plan_arrivalDateTime"));
+                intentToCallTextView.setText("Call: " + jsonObject.getString("store_tel"));
+
+            } catch (Exception e) {
+                Log.d("12octV5", "e onPost ==> " + e.toString());
+            }
 
         }   // onPost
 
