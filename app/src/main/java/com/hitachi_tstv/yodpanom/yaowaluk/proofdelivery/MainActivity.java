@@ -3,8 +3,8 @@ package com.hitachi_tstv.yodpanom.yaowaluk.proofdelivery;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +13,6 @@ import android.widget.EditText;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import com.squareup.okhttp.internal.Internal;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -141,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
                     //password true
                     Intent intent = new Intent(MainActivity.this, ServiceActivity.class);
                     intent.putExtra("Login", logingStrings);
+                    intent.putExtra("PlanId", "");
+                    intent.putExtra("Date", "");
                     startActivity(intent);
                     finish();
 

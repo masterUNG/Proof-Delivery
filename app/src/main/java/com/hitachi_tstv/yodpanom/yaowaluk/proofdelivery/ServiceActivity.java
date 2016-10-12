@@ -32,6 +32,7 @@ public class ServiceActivity extends AppCompatActivity {
     private boolean aBoolean = true;
     private String[] workSheetStrings, storeNameStrings,
             planArrivalTimeStrings, planDtl2_idStrings;
+    private String driverChooseString, dateChooseString;
 
 
     @Override
@@ -48,6 +49,16 @@ public class ServiceActivity extends AppCompatActivity {
 
         //Get Value from Intent
         loginStrings = getIntent().getStringArrayExtra("Login");
+        driverChooseString = getIntent().getStringExtra("PlanId");
+        dateChooseString = getIntent().getStringExtra("Date");
+
+        Log.d("12octV4", "driverChooseString ==> " + driverChooseString);
+
+        if (driverChooseString.length() != 0) {
+            //From MainActivity
+            aBoolean = false;
+        }
+
 
         //Show Name
         nameDriverTextView.setText(loginStrings[1]);
@@ -64,8 +75,9 @@ public class ServiceActivity extends AppCompatActivity {
             }
         });
 
-
     }   // Main Method
+
+
 
     private class SynDataWhereByDriverID extends AsyncTask<String, Void, String> {
 
@@ -127,8 +139,14 @@ public class ServiceActivity extends AppCompatActivity {
                     jobListButton.setText("Job List = " + planDateStrings[0]);
 
                     createDetailList(planIdStrings[0]);
+                    Log.d("12octV4", "plandID [0] ==> " + planIdStrings[0]);
 
-                }   // if
+                } else {
+                    // From Job ListView
+                    jobListButton.setText("Job List = " + dateChooseString);
+                    createDetailList(driverChooseString);
+
+                }
 
 
                 // Get Event From Click
@@ -139,7 +157,10 @@ public class ServiceActivity extends AppCompatActivity {
                         Intent intent = new Intent(ServiceActivity.this, JobListView.class);
                         intent.putExtra("Date", planDateStrings);
                         intent.putExtra("Store", cnt_storeStrings);
+                        intent.putExtra("Login", loginStrings);
+                        intent.putExtra("PlanId", planIdStrings);
                         startActivity(intent);
+                        finish();
 
                     }   // onClick
                 });
