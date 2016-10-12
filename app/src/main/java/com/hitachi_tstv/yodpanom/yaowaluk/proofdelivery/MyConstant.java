@@ -9,14 +9,22 @@ public class MyConstant {
     private int iconAnInt = R.drawable.doremon48;// Image for icon 48x48
     private String titleHaveSpaceString = "มีช่องว่าง";
     private String messageHaveeSpaceString = "กรุณากรอกข้อมูลให้ครบทุกช่อง ค่ะ!";
-
     private  String urlUserString  = "http://service.eternity.co.th/TmsPXD/app/CenterService/getUser.php";
     private String[] columLogin = new String[]{"drv_id","drv_name"};
     private String titleUserFalesString = "User False";
     private String messageUserFalesString = "ไม่มี User นี้ในฐานข้อมูลของเรา";
     private String titlePasswordFalse = "Password ผิด";
     private String messagePasswordFalse = "กรุณาลองใหม่ Passwordผิด";
+    private String urlDataWhereDriverID = "http://service.eternity.co.th/TmsPXD/app/CenterService/getPlan.php";
+    private String urlDataWhereDriverIDanDate = "";
 
+    public String getUrlDataWhereDriverID() {
+        return urlDataWhereDriverID;
+    }
+
+    public String getUrlDataWhereDriverIDanDate() {
+        return urlDataWhereDriverIDanDate;
+    }
 
     public String getTitlePasswordFalse() {
         return titlePasswordFalse;

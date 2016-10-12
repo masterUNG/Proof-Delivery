@@ -1,10 +1,19 @@
 package com.hitachi_tstv.yodpanom.yaowaluk.proofdelivery;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 public class ServiceActivity extends AppCompatActivity {
 
@@ -13,6 +22,7 @@ public class ServiceActivity extends AppCompatActivity {
     private Button jobListButton, closeButton;
     private ListView listView;
     private String[] loginStrings;
+    private MyConstant myConstant = new MyConstant();
 
 
     @Override
@@ -33,7 +43,54 @@ public class ServiceActivity extends AppCompatActivity {
         //Show Name
         nameDriverTextView.setText(loginStrings[1]);
 
+        //Syn data
+        SynDataWhereByDriverID synDataWhereByDriverID = new SynDataWhereByDriverID(ServiceActivity.this);
+        synDataWhereByDriverID.execute(myConstant.getUrlDataWhereDriverID());
 
     }   // Main Method
+
+    private class SynDataWhereByDriverID extends AsyncTask<String, Void, String> {
+
+        //Explicit
+        private Context context;
+
+        public SynDataWhereByDriverID(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            try {
+
+                OkHttpClient okHttpClient = new OkHttpClient();
+                RequestBody requestBody = new FormEncodingBuilder()
+                        .add("isAdd", "true")
+                        .add("driver_id", loginStrings[0])
+                        .build();
+                Request.Builder builder = new Request.Builder();
+                Request request = builder.url(strings[0]).post(requestBody).build();
+                Response response = okHttpClient.newCall(request).execute();
+                return response.body().string();
+
+
+            } catch (Exception e) {
+                Log.d("12octV1", "e doInBack ==> " + e.toString());
+                return null;
+            }
+
+        }   // doInBack
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Log.d("12octV1", "JSON ==> " + s);
+
+
+        }   // onPost
+
+    }   // SynDataWhereByDriverID
+
 
 }   // Main Class
